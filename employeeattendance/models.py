@@ -92,24 +92,4 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.employee_name} - {self.date} - {self.status}"
-    
-class EmployeePassword(models.Model):
-    employee = models.OneToOneField(EmployeeDetails, on_delete=models.CASCADE, related_name="password_entry")
-    employee_name = models.CharField(max_length=200)
-    password = models.CharField(max_length=20)
-
-    def __str__(self):
-        return f"{self.employee.EmployeeName} - {self.employee.id}"
-    
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.DateofBirth:
-            from .models import EmployeePassword
-            EmployeePassword.objects.update_or_create(
-                employee=self,
-                defaults={
-                    "employee_name": self.EmployeeName,         
-                    "password": str(self.DateofBirth.year)  
-                }
-            )
-
+  
