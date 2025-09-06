@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
-{% block style %}
+{% block content %}
 <style>
     body {
         background-color: #f4f6f9;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #96d0da, #e6b3ec);
     }
 
     .container {
@@ -48,11 +49,6 @@
         color: #ffffff;
     }
 
-    tbody tr:hover {
-        background: #f1f5ff;
-        transition: 0.2s;
-    }
-
     td, th {
         vertical-align: middle;
         text-align: center;
@@ -92,11 +88,9 @@
         padding: 10px 15px;
     }
 </style>
-{% endblock %}
 
-{% block content %}
 <div class="container mt-6">
-    <h2 class="mb-4 text-center text-primary">Edit Attendance</h2>
+    <h2 class="mb-4 text-center ">Edit Attendance</h2>
 
     <form method="get" class="row g-3 mb-4">
         <div class="col-auto">

@@ -23,6 +23,10 @@ def index(request):
     return render(request, "index.html")
 
 def auth_view(request):
+
+    login_form = LoginForm()
+    reg_form = RegistrationForm()
+    
     if request.method == "POST":
         if "login" in request.POST:
             login_form = LoginForm(request.POST)
@@ -64,10 +68,7 @@ def auth_view(request):
                 return redirect("auth")
             except User.DoesNotExist:
                 messages.error(request, "Username not found.")
-    else:
-        reg_form = RegistrationForm()
-        login_form = LoginForm()
-        
+    
     return render(request, "auth.html", {"reg_form": reg_form, "login_form": login_form})
 
 def logout_view(request):
