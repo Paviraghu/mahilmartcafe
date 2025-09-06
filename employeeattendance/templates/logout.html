@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 50px; 
+            text-align: center; 
+        }
+        form { 
+            padding: 20px; 
+        }
+        button { 
+            margin: 10px; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+        }
+        .logout { 
+            background: red; 
+            color: white;
+            padding: 10px;
+        }
+        .cancel { 
+            background: gray; 
+            color: white; 
+        }
+    </style>
+</head>
+<body>
+    <h2>Are you sure you want to logout?</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="logout">Yes, Logout</button>
+        <a href="{% url 'index' %}"><button type="button" class="cancel">Cancel</button></a>
+    </form>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background: #f4f7fa;
+        }
+        .page-title {
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card-custom {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 20px;
+        }
+        .table th {
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            color: white;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: .5px;
+        }
+        .table td {
+            vertical-align: middle;
+        }
+        .btn-primary {
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-weight: 500;
+        }
+        .btn-success {
+            border-radius: 8px;
+            padding: 4px 12px;
+            font-size: 14px;
+        }
+        .modal-content {
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            border-radius: 14px 14px 0 0;
+        }
+        label {
+            font-weight: 500;
+            font-size: 14px;
+        }
+         .btn-custom { 
+            width: 100px; 
+            padding: 10px; 
+            font-size: 18px; 
+            border-radius: 5px; 
+            border: none; 
+            cursor: pointer; 
+            text-align: center; 
+            text-decoration: none; 
+            font-weight: 500;
+            display: inline-block;
+            transition: background 0.3s;
+            color: #fff; 
+        }
+        .btn-back   { background: #777575; }  
+    </style>
+</head>
+<body class="p-4">
+
+<div class="container">
+    <h2 class="text-center mb-4 page-title">Employee List</h2>
+
+    <div class="card-custom">
+        <div class="mb-3 text-end">
+            <a href="{% url 'add_employee' %}" class="btn btn-primary shadow-sm">+ Add Employee</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered text-center align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td>{{ emp.id }}</td>
+                        <td>{{ emp.employee_code }}</td>
+                        <td>{{ emp.EmployeeName }}</td>
+                        <td>{{ emp.Gender }}</td>
+                        <td>{{ emp.Phone_no }}</td>
+                        <td>{{ emp.Role }}</td>
+                        <td>
+                            <button class="btn btn-success btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ emp.id }}">Edit</button>
+                        </td>
+                    </tr>
+
+                    <div class="modal fade" id="editModal{{ emp.id }}" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content p-3">
+                          <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">Edit Employee - {{ emp.EmployeeName }}</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="emp_id" value="{{ emp.id }}">
+
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label>Employee Code</label>
+                                        <input type="text" name="employee_code" class="form-control" value="{{ emp.employee_code }}" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Name</label>
+                                        <input type="text" name="EmployeeName" class="form-control" value="{{ emp.EmployeeName }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Gender</label>
+                                        <input type="text" name="Gender" class="form-control" value="{{ emp.Gender }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Marital Status</label>
+                                        <input type="text" name="Marital_status" class="form-control" value="{{ emp.Marital_status }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Address</label>
+                                        <input type="text" name="Address" class="form-control" value="{{ emp.Address }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Relative Name</label>
+                                        <input type="text" name="Relative_name" class="form-control" value="{{ emp.Relative_name }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Qualification</label>
+                                        <input type="text" name="Qualification" class="form-control" value="{{ emp.Qualification }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Date of Birth</label>
+                                        <input type="date" name="DateofBirth" class="form-control" value="{{ emp.DateofBirth|date:'Y-m-d' }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Date of Join</label>
+                                        <input type="date" name="DateofJoin" class="form-control" value="{{ emp.DateofJoin|date:'Y-m-d' }}" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Phone No</label>
+                                        <input type="text" name="Phone_no" class="form-control" value="{{ emp.Phone_no }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Emergency Phone No</label>
+                                        <input type="text" name="Emergency_phone_no" class="form-control" value="{{ emp.Emergency_phone_no }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Shift Timing</label>
+                                        <input type="text" name="Shift_timing" class="form-control" value="{{ emp.Shift_timing }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Blood Group</label>
+                                        <input type="text" name="Blood_group" class="form-control" value="{{ emp.Blood_group }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Role</label>
+                                        <input type="text" name="Role" class="form-control" value="{{ emp.Role }}">
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary px-4">Save</button>
+                                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% empty %}
+                    <tr><td colspan="7">No employees found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+     <div class="text-center mt-4">
+    <a href="{% url 'index' %}" class="btn-custom btn-back">Back</a>
+</div>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

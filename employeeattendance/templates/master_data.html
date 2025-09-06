@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Master Data</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #eef2f7; 
+            margin:0; 
+            padding:5px; 
+        }
+        h1 { 
+            text-align:center; 
+            color:#333; 
+            margin:20px 0; 
+            font-size:24px; 
+            font-weight:600;
+        }
+        form {
+            max-width: 550px; 
+            margin:0 auto 50px; 
+            padding:25px;
+            background:#fff; 
+            border-radius:12px; 
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        }
+        .two-column { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap:18px 22px; 
+        }
+        .form-group { 
+            display:flex; 
+            flex-direction:column; 
+            margin-bottom:12px; 
+        }
+        .form-group label { 
+            font-size:14px; 
+            margin-bottom:6px; 
+            color:#444; 
+            font-weight:600; 
+        }
+        .form-group input, 
+        .form-group select {
+            padding:10px 12px; 
+            border:1px solid #bbb; 
+            border-radius:6px; 
+            font-size:14px; 
+            font-weight:500;
+            transition: all 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-group input:focus, 
+        .form-group select:focus {
+            --border-color:#4CAF50; 
+            box-shadow:0 0 5px rgba(76,175,80,0.3); 
+            outline:none;
+        }
+        .button-group { 
+            display:flex; 
+            justify-content: center; 
+            gap:12px; 
+            margin-top:20px; 
+            grid-column: span 2; 
+        }
+
+        .back-btn, .save-btn { 
+            padding:10px 18px;   
+            border-radius:6px; 
+            font-weight:600;  
+            font-size:16px;
+            text-align:center;
+            text-decoration:none; 
+            cursor:pointer;
+            transition: all 0.2s ease;
+            min-width: 100px;   
+        }
+
+        .back-btn { 
+            background:#7e7c7c; 
+            color:#fff; 
+        }
+        .save-btn { 
+            background:#4CAF50; 
+            color:#fff; 
+            border:none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Information</h1>
+    <form method="post" class="two-column">
+        {% csrf_token %}
+        
+        {% for field in gender_form %}
+        <div class="form-group">{{ field.label_tag }}{{ field }}</div>
+        {% endfor %}
+        
+        {% for field in marital_form %}
+        <div class="form-group">{{ field.label_tag }}{{ field }}</div>
+        {% endfor %}
+        
+        {% for field in shift_form %}
+        <div class="form-group">{{ field.label_tag }}{{ field }}</div>
+        {% endfor %}
+        
+        {% for field in blood_form %}
+        <div class="form-group">{{ field.label_tag }}{{ field }}</div>
+        {% endfor %}
+        
+        {% for field in role_form %}
+        <div class="form-group">{{ field.label_tag }}{{ field }}</div>
+        {% endfor %}
+
+        <div class="button-group">
+            <button type="submit" class="save-btn">Save</button>
+            <a href="{% url 'index' %}" class="back-btn">Back</a>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock %}
